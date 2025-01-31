@@ -6,8 +6,9 @@ public class Program
     {
         try
         {
-            int result = RomanParser.DigitValue('X');
-            Console.WriteLine($"Значение римской цифры 'X' равно: {result}");
+            int result = RomanParser.Parse("MCMXCIV");  // 1994
+            Console.WriteLine(result);
+
         }
         catch (ArgumentOutOfRangeException ex)
         {
