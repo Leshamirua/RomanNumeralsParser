@@ -30,7 +30,7 @@ public class RomanParser
                 throw new ArgumentOutOfRangeException(nameof(roman), $"Недопустимая римская цифра: {currentSymbol}");
 
             int currentValue = romanValues[currentSymbol];
-            
+
             if (currentValue < prevValue)
             {
                 total -= currentValue;
@@ -41,6 +41,49 @@ public class RomanParser
             }
 
             prevValue = currentValue;
+        }
+
+        return total;
+    }
+    
+    public static int ParseWithErrors(string roman)
+    {
+        if (string.IsNullOrEmpty(roman))
+            throw new ArgumentException("Римская строка не может быть пустой", nameof(roman));
+        
+        List<string> errors = new List<string>();
+
+        int total = 0;
+        int prevValue = 0;
+        
+        for (int i = 0; i < roman.Length; i++)
+        {
+            char currentSymbol = roman[i];
+            
+            if (!romanValues.ContainsKey(currentSymbol))
+            {
+                errors.Add($"неправильная цифра '{currentSymbol}' в позиции {i}");
+            }
+            else
+            {
+                int currentValue = romanValues[currentSymbol];
+                
+                if (currentValue < prevValue)
+                {
+                    total -= currentValue;
+                }
+                else
+                {
+                    total += currentValue;
+                }
+
+                prevValue = currentValue;
+            }
+        }
+        
+        if (errors.Count > 0)
+        {
+            throw new ArgumentException(string.Join(", ", errors));
         }
 
         return total;

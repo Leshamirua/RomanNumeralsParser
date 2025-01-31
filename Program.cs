@@ -6,13 +6,14 @@ public class Program
     {
         try
         {
-            int result = RomanParser.Parse("MCMXCIV");  // 1994
-            Console.WriteLine(result);
-
+            // int result = RomanParser.Parse("MCMXCIV");  // 1994
+            int result = RomanParser.ParseWithErrors("VXIYV");  // строка с ошибкой
+            Console.WriteLine($"Результат: {result}");
         }
-        catch (ArgumentOutOfRangeException ex)
+        catch (ArgumentException ex)
         {
             Console.WriteLine($"Ошибка: {ex.Message}");
         }
+
     }
 }

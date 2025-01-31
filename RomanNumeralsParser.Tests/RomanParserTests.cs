@@ -1,5 +1,6 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace RomanNumeralsParser.Tests
 {
@@ -44,6 +45,34 @@ namespace RomanNumeralsParser.Tests
             {
                 int result = RomanParser.Parse(testCase.Key);  
                 Assert.AreEqual(testCase.Value, result, $"Тест не пройден для {testCase.Key}");
+            }
+        }
+
+        [TestMethod]
+        public void ParseTest_WithErrorCases()
+        {
+            // testCases - строки с правильными и неправильными символами
+            var testCases = new List<string>
+            {
+                "MCMXCIV",   // правильная строка
+                "IIII",      // не оптимальная, но допустимая
+                "IAXI",      // содержит ошибочный символ 'A'
+                "123IV",     // содержит цифры
+                "LXLX",      // неправильная строка
+                "VXIYV"      // содержит ошибочный символ 'Y'
+            };
+
+            foreach (var testCase in testCases)
+            {
+                try
+                {
+                    int result = RomanParser.ParseWithErrors(testCase); 
+                    Console.WriteLine($"Значение строки '{testCase}' = {result}");
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"Ошибка: {ex.Message}");
+                }
             }
         }
     }
